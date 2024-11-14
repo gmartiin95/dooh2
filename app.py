@@ -9,7 +9,7 @@ df = pd.read_csv(ruta_csv)
 df.fillna(0, inplace=True)
 df['Zipcode'] = df['Zipcode'].astype(float).astype(int)
 
-st.title('Búsqueda de Información')
+st.title('Búsqueda de Información DOOH')
 # Bloque 2: Búsqueda por Ciudad (Elección Múltiple)
 st.header("Búsqueda por Ciudad")
 
