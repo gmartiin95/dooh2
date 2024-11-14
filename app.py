@@ -26,7 +26,7 @@ else:
 
 # Bloque 2: Filtro por Venue type (dependiente del filtro de ciudad)
 st.header("Filtro por Venue types")
-venuetypes_seleccionados = st.multiselect("Selecciona uno o varios venue types. outdoor= exterior, subway=staciones , parking/garages y malls= Centros comerciales", venuetypes_disponibles)
+venuetypes_seleccionados = st.multiselect("Selecciona uno o varios venue types. outdoor= exterior, subway=estaciones , parking/garages y malls= Centros comerciales", venuetypes_disponibles)
 
 # Filtrar el DataFrame en función de los filtros seleccionados
 df_filtrado_final = df.copy()
