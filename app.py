@@ -34,22 +34,23 @@ if not df_resultado_zip.empty:
 else:
     st.write("No se encontraron resultados para los códigos postales ingresados.")
 
-# Bloque 2: Búsqueda por Ciudad
+# Bloque 2: Búsqueda por Ciudad (Elección Múltiple)
 st.header("Búsqueda por Ciudad")
 
-# Crear un menú desplegable para seleccionar la ciudad
+# Crear un campo de selección múltiple para las ciudades
 ciudades_disponibles = df['City'].unique()  # Lista de ciudades únicas en el DataFrame
-ciudad_seleccionada = st.selectbox('Selecciona una ciudad', ciudades_disponibles)
+ciudades_seleccionadas = st.multiselect('Selecciona una o varias ciudades', ciudades_disponibles)
 
-# Filtrar el DataFrame por la ciudad seleccionada
-df_filtrado_ciudad = df[df['City'] == ciudad_seleccionada]
+# Filtrar el DataFrame por las ciudades seleccionadas (si hay alguna seleccionada)
+if ciudades_seleccionadas:
+    df_filtrado_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
+    df_resultado_ciudad = df_filtrado_ciudad[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
 
-# Seleccionar solo las columnas que necesitas para el resultado
-df_resultado_ciudad = df_filtrado_ciudad[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
-
-# Mostrar resultados del bloque de ciudades
-if not df_resultado_ciudad.empty:
-    st.write(f"Resultados encontrados para la ciudad: {ciudad_seleccionada}")
-    st.dataframe(df_resultado_ciudad)
+    # Mostrar resultados del bloque de ciudades
+    if not df_resultado_ciudad.empty:
+        st.write(f"Resultados encontrados para las ciudades seleccionadas:")
+        st.dataframe(df_resultado_ciudad)
+    else:
+        st.write("No se encontraron resultados para las ciudades seleccionadas.")
 else:
-    st.write("No se encontraron resultados para la ciudad seleccionada.")
+    st.write("Por favor, selecciona al menos una ciudad.")
