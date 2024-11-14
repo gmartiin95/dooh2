@@ -53,23 +53,4 @@ if not df_resultado_zip.empty:
     st.dataframe(df_resultado_zip)
 else:
     st.write("No se encontraron resultados para los códigos postales ingresados.")
-# Bloque 3: Búsqueda por venue_type (Elección Múltiple)
-st.header("Búsqueda por Venue type")
 
-# Crear un campo de selección múltiple para las ciudades
-tipo_disponibles = df['Venue types'].unique()  # Lista de ciudades únicas en el DataFrame
-tipos_seleccionadas = st.multiselect('Selecciona una o varios Venues', tipo_disponibles)
-
-# Filtrar el DataFrame por las ciudades seleccionadas (si hay alguna seleccionada)
-if tipos_seleccionadas:
-    df_filtrado_tipo= df[df['Venue types'].isin(tipos_seleccionadas)]
-    df_resultado_tipo = df_filtrado_tipo[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
-
-    # Mostrar resultados del bloque de ciudades
-    if not df_resultado_tipo.empty:
-        st.write(f"Resultados encontrados para los Venues seleccionados:")
-        st.dataframe(df_resultado_tipo)
-    else:
-        st.write("No se encontraron resultados para los Venues seleccionadas.")
-else:
-    st.write("Por favor, selecciona al menos un Venue.")
