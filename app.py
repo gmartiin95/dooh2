@@ -50,7 +50,7 @@ else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
     
 # Bloque 3: Búsqueda por Códigos Postales
-st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue")
+st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue"))
 st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
 
 # Caja de texto para ingresar los códigos postales
