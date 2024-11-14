@@ -16,7 +16,7 @@ st.header("Filtro por Ciudad")
 ciudades_disponibles = df['City'].unique()  # Lista de todas las ciudades
 ciudades_seleccionadas = st.multiselect("Selecciona una o varias ciudades", ciudades_disponibles)
 
-# Filtrar códigos postales disponibles en función de las ciudades seleccionadas
+# Filtrar venue types disponibles en función de las ciudades seleccionadas
 if ciudades_seleccionadas:
     df_filtrado_por_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
     venuetypes_disponibles = df_filtrado_por_ciudad['Venue types'].unique()
@@ -26,7 +26,7 @@ else:
 
 # Bloque 2: Filtro por Venue type (dependiente del filtro de ciudad)
 st.header("Filtro por Venue types")
-venuetypes_seleccionados = st.multiselect("Selecciona uno o varios venue types", venuetypes_disponibles)
+venuetypes_seleccionados = st.multiselect("Selecciona uno o varios venue types. outdoor= exterior, subway= tren y malls= Centros comerciales", venuetypes_disponibles)
 
 # Filtrar el DataFrame en función de los filtros seleccionados
 df_filtrado_final = df.copy()
