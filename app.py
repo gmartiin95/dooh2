@@ -19,10 +19,10 @@ ciudades_seleccionadas = st.multiselect("Selecciona una o varias ciudades", ciud
 # Filtrar códigos postales disponibles en función de las ciudades seleccionadas
 if ciudades_seleccionadas:
     df_filtrado_por_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
-    codigos_postales_disponibles = df_filtrado_por_ciudad['Zipcode'].unique()
+    codigos_postales_disponibles = df_filtrado_por_ciudad['Venue types'].unique()
 else:
     # Si no se selecciona ninguna ciudad, mostrar todos los códigos postales
-    codigos_postales_disponibles = df['Zipcode'].unique()
+    codigos_postales_disponibles = df['Venue types'].unique()
 
 # Bloque 2: Filtro por Código Postal (dependiente del filtro de ciudad)
 st.header("Filtro por Código Postal")
@@ -37,7 +37,7 @@ if ciudades_seleccionadas:
 
 # Aplicar filtro de código postal si hay códigos postales seleccionados
 if codigos_postales_seleccionados:
-    df_filtrado_final = df_filtrado_final[df_filtrado_final['Zipcode'].isin(codigos_postales_seleccionados)]
+    df_filtrado_final = df_filtrado_final[df_filtrado_final['Venue types'].isin(codigos_postales_seleccionados)]
 
 # Seleccionar solo las columnas que necesitas para el resultado
 df_resultado = df_filtrado_final[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
