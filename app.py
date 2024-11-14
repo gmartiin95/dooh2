@@ -26,7 +26,7 @@ else:
 
 # Bloque 2: Filtro por Venue type (dependiente del filtro de ciudad)
 st.header("Filtro por Venue types")
-venuetypes_seleccionados = st.multiselect("Selecciona uno o varios venue types. outdoor= exterior, subway=estaciones , parking/garages y malls= Centros comerciales", venuetypes_disponibles)
+venuetypes_seleccionados = st.multiselect("Selecciona uno o varios Venue types. Outdoor= exterior, subway=estaciones de tren, parking/garages y malls= Centros Comerciales", venuetypes_disponibles)
 
 # Filtrar el DataFrame en función de los filtros seleccionados
 df_filtrado_final = df.copy()
@@ -50,7 +50,7 @@ else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
     
 # Bloque 3: Búsqueda por Códigos Postales
-st.header("Búsqueda por Códigos Postales")
+st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue")
 st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
 
 # Caja de texto para ingresar los códigos postales
