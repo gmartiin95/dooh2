@@ -1,5 +1,6 @@
 import pandas as pd
-import streamlit as st # type: ignore
+import streamlit as st
+
 # Paso 1: Cargar el CSV en un DataFrame de pandas
 ruta_csv = 'jcdcaux.csv'  # Cambia esta ruta al archivo CSV que tienes
 df = pd.read_csv(ruta_csv)
@@ -7,6 +8,7 @@ df = pd.read_csv(ruta_csv)
 # Paso 2: Preprocesamiento del DataFrame
 df.fillna(0, inplace=True)
 df['Zipcode'] = df['Zipcode'].astype(float).astype(int)
+
 # Paso 3: Crear una interfaz para que el usuario ingrese los códigos postales
 st.title('Búsqueda de Códigos Postales')
 st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
@@ -29,5 +31,4 @@ if not df_resultado.empty:
     st.dataframe(df_resultado)
 else:
     st.write("No se encontraron resultados para los códigos postales ingresados.")
-
 
