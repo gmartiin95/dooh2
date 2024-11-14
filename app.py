@@ -9,48 +9,43 @@ df = pd.read_csv(ruta_csv)
 df.fillna(0, inplace=True)
 df['Zipcode'] = df['Zipcode'].astype(float).astype(int)
 
-st.title('Búsqueda de Información DOOH')
-# Bloque 2: Búsqueda por Ciudad (Elección Múltiple)
-st.header("Búsqueda por Ciudad")
+st.title('Búsqueda de Información con Filtros Dependientes')
 
-# Crear un campo de selección múltiple para las ciudades
-ciudades_disponibles = df['City'].unique()  # Lista de ciudades únicas en el DataFrame
-ciudades_seleccionadas = st.multiselect('Selecciona una o varias ciudades', ciudades_disponibles)
+# Bloque 1: Filtro por Ciudad (con multiselección)
+st.header("Filtro por Ciudad")
+ciudades_disponibles = df['City'].unique()  # Lista de todas las ciudades
+ciudades_seleccionadas = st.multiselect("Selecciona una o varias ciudades", ciudades_disponibles)
 
-# Filtrar el DataFrame por las ciudades seleccionadas (si hay alguna seleccionada)
+# Filtrar códigos postales disponibles en función de las ciudades seleccionadas
 if ciudades_seleccionadas:
-    df_filtrado_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
-    df_resultado_ciudad = df_filtrado_ciudad[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
-
-    # Mostrar resultados del bloque de ciudades
-    if not df_resultado_ciudad.empty:
-        st.write(f"Resultados encontrados para las ciudades seleccionadas:")
-        st.dataframe(df_resultado_ciudad)
-    else:
-        st.write("No se encontraron resultados para las ciudades seleccionadas.")
+    df_filtrado_por_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
+    codigos_postales_disponibles = df_filtrado_por_ciudad['Zipcode'].unique()
 else:
-    st.write("Por favor, selecciona al menos una ciudad.")
-    
-# Bloque 1: Búsqueda por Códigos Postales
-st.header("Búsqueda por Códigos Postales")
-st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
+    # Si no se selecciona ninguna ciudad, mostrar todos los códigos postales
+    codigos_postales_disponibles = df['Zipcode'].unique()
 
-# Caja de texto para ingresar los códigos postales
-input_zipcodes = st.text_input('Códigos postales', '4006, 4004, 37004')  # Valor por defecto
+# Bloque 2: Filtro por Código Postal (dependiente del filtro de ciudad)
+st.header("Filtro por Código Postal")
+codigos_postales_seleccionados = st.multiselect("Selecciona uno o varios códigos postales", codigos_postales_disponibles)
 
-# Convertir los códigos postales ingresados en una lista de enteros
-zipcodes_a_buscar = [int(zipcode.strip()) for zipcode in input_zipcodes.split(',')]
+# Filtrar el DataFrame en función de los filtros seleccionados
+df_filtrado_final = df.copy()
 
-# Filtrar el DataFrame por códigos postales
-df_filtrado_zip = df[df['Zipcode'].isin(zipcodes_a_buscar)]
+# Aplicar filtro de ciudad si hay ciudades seleccionadas
+if ciudades_seleccionadas:
+    df_filtrado_final = df_filtrado_final[df_filtrado_final['City'].isin(ciudades_seleccionadas)]
+
+# Aplicar filtro de código postal si hay códigos postales seleccionados
+if codigos_postales_seleccionados:
+    df_filtrado_final = df_filtrado_final[df_filtrado_final['Zipcode'].isin(codigos_postales_seleccionados)]
 
 # Seleccionar solo las columnas que necesitas para el resultado
-df_resultado_zip = df_filtrado_zip[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
+df_resultado = df_filtrado_final[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
 
-# Mostrar resultados del bloque de códigos postales
-if not df_resultado_zip.empty:
-    st.write("Resultados encontrados por códigos postales:")
-    st.dataframe(df_resultado_zip)
+# Mostrar resultados en función de los filtros aplicados
+if not df_resultado.empty:
+    st.write("Resultados encontrados con los filtros aplicados:")
+    st.dataframe(df_resultado)
 else:
-    st.write("No se encontraron resultados para los códigos postales ingresados.")
+    st.write("No se encontraron resultados para los filtros seleccionados.")
 
