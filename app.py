@@ -5,18 +5,6 @@ df = pd.read_csv(ruta_csv)
 # Paso 2: Preprocesamiento del DataFrame
 df.fillna(0, inplace=True)
 df['Zipcode'] = df['Zipcode'].astype(float).astype(int)
-
-# Paso 3: Crear una interfaz para que el usuario ingrese los códigos postales
-st.title('Búsqueda por ciudad')
-st.write("Ingresa las ciudades separadas por comas")
-# Caja de texto para ingresar los códigos postales
-input_ciudades = st.text_input('Ciudad', 'Madrid, Barcelona')  # Valor por defecto
-
-# Convertir los códigos postales ingresados en una lista de enteros
-ciudades_a_buscar = [str(city.strip()) for city in input_ciudades.split(',')]
-# Paso 4: Filtrar el DataFrame para obtener solo las filas con códigos postales que coinciden
-df_filtrado_ciudad = df[df['City'].isin(ciudades_a_buscar)]
-
 # Paso 3: Crear una interfaz para que el usuario ingrese los códigos postales
 st.title('Búsqueda de Códigos Postales')
 st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
