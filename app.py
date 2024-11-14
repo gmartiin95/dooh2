@@ -57,12 +57,12 @@ else:
 st.header("Búsqueda por Venue type")
 
 # Crear un campo de selección múltiple para las ciudades
-tipo_disponibles = df['Venue type'].unique()  # Lista de ciudades únicas en el DataFrame
+tipo_disponibles = df['Venue types'].unique()  # Lista de ciudades únicas en el DataFrame
 tipos_seleccionadas = st.multiselect('Selecciona una o varios Venues', tipo_disponibles)
 
 # Filtrar el DataFrame por las ciudades seleccionadas (si hay alguna seleccionada)
 if tipos_seleccionadas:
-    df_filtrado_tipo= df[df['Venue type'].isin(tipos_seleccionadas)]
+    df_filtrado_tipo= df[df['Venue types'].isin(tipos_seleccionadas)]
     df_resultado_tipo = df_filtrado_tipo[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
 
     # Mostrar resultados del bloque de ciudades
