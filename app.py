@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 # Paso 1: Cargar el CSV en un DataFrame de pandas
-ruta_csv = 'jcdcaux.csv'  # Cambia esta ruta al archivo CSV que tienes
+ruta_csv = 'jcdcaux - jcdcaux.csv'  # Cambia esta ruta al archivo CSV que tienes
 df = pd.read_csv(ruta_csv)
 
 # Paso 2: Preprocesamiento del DataFrame
