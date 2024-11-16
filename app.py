@@ -21,7 +21,7 @@ if ciudades_seleccionadas:
     df_filtrado_por_ciudad = df[df['City'].isin(ciudades_seleccionadas)]
     venuetypes_disponibles = df_filtrado_por_ciudad['Venue types'].unique()
 else:
-    # Si no se selecciona ninguna ciudad, mostrar todos los códigos postales
+    # Si no se selecciona ninguna ciudad, mostrar todos los venue types
     venuetypes_disponibles = df['Venue types'].unique()
 
 # Bloque 2: Filtro por Venue type (dependiente del filtro de ciudad)
