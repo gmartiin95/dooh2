@@ -1,3 +1,5 @@
+pip install streamlit geopy pandas
+
 import pandas as pd
 import streamlit as st
 from geopy.geocoders import Nominatim
