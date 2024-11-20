@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
+
 
 # Paso 1: Cargar el CSV en un DataFrame de pandas
 ruta_csv = 'jcdcaux - jcdcaux (1).csv'  # Cambia esta ruta al archivo CSV que tienes
