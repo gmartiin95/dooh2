@@ -1,4 +1,4 @@
-pip install folium streamlit-folium
+
 import pandas as pd
 import streamlit as st
 import folium
