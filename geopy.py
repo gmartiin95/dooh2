@@ -8,6 +8,13 @@ from streamlit_folium import st_folium
 ruta_csv = 'DOOH  15 - Sheet1.csv'  # Cambia esta ruta al archivo CSV que tienes
 df = pd.read_csv(ruta_csv)
 
+# Convertir Latitude y Longitude a números, ignorando valores no válidos
+df['Latitude'] = pd.to_numeric(df['Latitude'], errors='coerce')
+df['Longitude'] = pd.to_numeric(df['Longitude'], errors='coerce')
+
+# Eliminar filas con coordenadas inválidas
+df = df.dropna(subset=['Latitude', 'Longitude'])
+
 # Paso 2: Preprocesamiento del DataFrame
 df.fillna(0, inplace=True)
 df['Zipcode'] = df['Zipcode'].astype(float).astype(int)
