@@ -85,6 +85,17 @@ if not df_resultado.empty:
 
     # Mostrar el mapa en Streamlit
     st_folium(mapa, width=700, height=500)
+     # Guardar el mapa en un archivo HTML
+    mapa.save("mapa_interactivo.html")
+
+    # Botón para descargar el mapa como HTML
+    with open("mapa_interactivo.html", "rb") as file:
+        btn = st.download_button(
+            label="Descargar Mapa (HTML)",
+            data=file,
+            file_name="mapa_interactivo.html",
+            mime="text/html"
+        )
 else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
 
