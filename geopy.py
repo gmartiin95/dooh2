@@ -66,12 +66,13 @@ if not df_resultado.empty:
 # Crear un grupo de marcadores
     marker_cluster = MarkerCluster().add_to(mapa)
     # Agregar marcadores al grupo
+    # Agregar marcadores al mapa
     for _, row in df_resultado.iterrows():
-    folium.Marker(
-        location=[row['Latitude'], row['Longitude']],
-        popup=f"{row['Full address']} - {row['Venue types']}",
-        tooltip=row['City']
-    ).add_to(marker_cluster)
+        folium.Marker(
+            location=[row['Latitude'], row['Longitude']],
+            popup=f"{row['Full address']} - {row['Venue types']}",
+            tooltip=row['City']
+        ).add_to(marker_cluster))
   # Agregar un buscador de ubicaciones
     search = Search(
         layer=marker_cluster,  # Buscar en los marcadores agrupados
