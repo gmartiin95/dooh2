@@ -72,7 +72,7 @@ if not df_resultado.empty:
             location=[row['Latitude'], row['Longitude']],
             popup=f"{row['Full address']} - {row['Venue types']}",
             tooltip=row['City']
-        ).add_to(marker_cluster))
+        ).add_to(marker_cluster)
   # Agregar un buscador de ubicaciones
     search = Search(
         layer=marker_cluster,  # Buscar en los marcadores agrupados
