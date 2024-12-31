@@ -72,12 +72,12 @@ if not df_resultado.empty:
         popup=f"{row['Full address']} - {row['Venue types']}",
         tooltip=row['City']
     ).add_to(marker_cluster)
-   # Agregar un buscador
-    search = Search(
-        layer=marker_cluster,  # Buscar en los marcadores agrupados
-        search_label='City',   # Buscar por la columna 'City'
-        placeholder='Buscar ciudad...',
-        collapsed=True
+  # Agregar un buscador
+search = Search(
+    layer=marker_cluster,  # Buscar en los marcadores agrupados
+    search_label='City',   # Buscar por la columna 'City'
+    placeholder='Buscar ciudad...',
+    collapsed=True
 ).add_to(mapa)
     # Mostrar el mapa en Streamlit
     st_folium(mapa, width=700, height=500)
