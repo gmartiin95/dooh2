@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
+from folium.plugins import MarkerCluster
 
 # Paso 1: Cargar el CSV en un DataFrame de pandas
 ruta_csv = 'DOOH  15 - Sheet1.csv'  # Cambia esta ruta al archivo CSV que tienes
@@ -61,15 +62,16 @@ if not df_resultado.empty:
     st.header("Mapa de Ubicaciones")
     centro_mapa = [df_resultado['Latitude'].mean(), df_resultado['Longitude'].mean()]
     mapa = folium.Map(location=centro_mapa, zoom_start=12)
-
-    # Agregar marcadores al mapa
+# Crear un grupo de marcadores
+    marker_cluster = MarkerCluster().add_to(mapa)
+    # Agregar marcadores al grupo
     for _, row in df_resultado.iterrows():
-        folium.Marker(
-            location=[row['Latitude'], row['Longitude']],
-            popup=f"{row['Full address']} - {row['Venue types']}",
-            tooltip=row['City']
-        ).add_to(mapa)
-
+    folium.Marker(
+        location=[row['Latitude'], row['Longitude']],
+        popup=f"{row['Full address']} - {row['Venue types']}",
+        tooltip=row['City']
+    ).add_to(marker_cluster)
+   
     # Mostrar el mapa en Streamlit
     st_folium(mapa, width=700, height=500)
 else:
