@@ -4,6 +4,7 @@ import streamlit as st
 import folium
 from streamlit_folium import st_folium
 from folium.plugins import MarkerCluster
+from folium.plugins import Search
 
 # Paso 1: Cargar el CSV en un DataFrame de pandas
 ruta_csv = 'DOOH  15 - Sheet1.csv'  # Cambia esta ruta al archivo CSV que tienes
@@ -71,7 +72,13 @@ if not df_resultado.empty:
         popup=f"{row['Full address']} - {row['Venue types']}",
         tooltip=row['City']
     ).add_to(marker_cluster)
-   
+   # Agregar un buscador
+    search = Search(
+        layer=marker_cluster,  # Buscar en los marcadores agrupados
+        search_label='City',   # Buscar por la columna 'City'
+        placeholder='Buscar ciudad...',
+        collapsed=True
+).add_to(mapa)
     # Mostrar el mapa en Streamlit
     st_folium(mapa, width=700, height=500)
 else:
