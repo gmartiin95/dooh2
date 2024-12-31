@@ -63,19 +63,21 @@ if not df_resultado.empty:
     st.header("Mapa de Ubicaciones")
     centro_mapa = [df_resultado['Latitude'].mean(), df_resultado['Longitude'].mean()]
     mapa = folium.Map(location=centro_mapa, zoom_start=12)
-# Crear un grupo de marcadores
-    marker_cluster = MarkerCluster().add_to(mapa)
-    # Agregar marcadores al grupo
-    # Agregar marcadores al mapa
+  # Crear un grupo de marcadores para el buscador
+    marker_group = folium.FeatureGroup(name="Marcadores")
+    mapa.add_child(marker_group)
+
+    # Agregar marcadores al mapa como puntos individuales
     for _, row in df_resultado.iterrows():
         folium.Marker(
             location=[row['Latitude'], row['Longitude']],
             popup=f"{row['Full address']} - {row['Venue types']}",
             tooltip=row['City']
-        ).add_to(marker_cluster)
-  # Agregar un buscador de ubicaciones
+        ).add_to(marker_group)
+
+    # Agregar un buscador de ubicaciones
     search = Search(
-        layer=marker_cluster,  # Buscar en los marcadores agrupados
+        layer=marker_group,  # Buscar en los marcadores individuales
         search_label='City',   # Buscar por la columna 'City'
         placeholder='Buscar ciudad...',
         collapsed=True
