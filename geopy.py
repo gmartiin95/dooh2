@@ -63,7 +63,7 @@ if not df_resultado.empty:
     # Crear un mapa interactivo con Folium
     st.header("Mapa de Ubicaciones")
     centro_mapa = [df_resultado['Latitude'].mean(), df_resultado['Longitude'].mean()]
-    mapa = folium.Map(location=centro_mapa, zoom_start=8)
+    mapa = folium.Map(location=centro_mapa, zoom_start=16)
   # Crear un grupo de marcadores para el buscador
     marker_group = folium.FeatureGroup(name="Marcadores")
     mapa.add_child(marker_group)
