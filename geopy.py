@@ -96,21 +96,19 @@ if not df_resultado.empty:
             file_name="mapa_interactivo.html",
             mime="text/html"
         )
-else:
-    st.write("No se encontraron resultados para los filtros seleccionados.")
 
     # Filtrar el DataFrame por códigos postales
     df_filtrado_zip = df[df['Zipcode'].isin(zipcodes_a_buscar)]
 
-    # Seleccionar solo las columnas que necesitas para el resultado
-    df_resultado_zip = df_filtrado_zip[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
+# Seleccionar solo las columnas que necesitas para el resultado
+df_resultado_zip = df_filtrado_zip[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'Venue types']]
 
-    # Mostrar resultados del bloque de códigos postales
-    if not df_resultado_zip.empty:
-        st.write("Resultados encontrados por códigos postales:")
-        st.dataframe(df_resultado_zip)
-    else:
-        st.write("No se encontraron resultados para los códigos postales ingresados.")
+# Mostrar resultados del bloque de códigos postales
+if not df_resultado_zip.empty:
+    st.write("Resultados encontrados por códigos postales:")
+    st.dataframe(df_resultado_zip)
+else:
+    st.write("No se encontraron resultados para los códigos postales ingresados.")
 
 
 
