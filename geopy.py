@@ -100,6 +100,15 @@ if not df_resultado.empty:
 else:
     st.write("No se encontraron resultados para los filtros seleccionados.")
 
+# Bloque 3: Búsqueda por Códigos Postales
+st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue)")
+st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
+
+# Caja de texto para ingresar los códigos postales
+input_zipcodes = st.text_input('Códigos postales', '4006, 4004, 37004')  # Valor por defecto
+
+# Convertir los códigos postales ingresados en una lista de enteros
+zipcodes_a_buscar = [int(zipcode.strip()) for zipcode in input_zipcodes.split(',')]
 # Filtrar el DataFrame por códigos postales
 df_filtrado_zip = df[df['Zipcode'].isin(zipcodes_a_buscar)]
 
