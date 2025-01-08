@@ -7,7 +7,7 @@ import time
 from datetime import datetime, timedelta
 import re
 
-# Función de scraping (la misma que proporcionaste)
+# Función de scraping
 def scrape_health_articles(newspapers, health_keywords, max_age_days=30):
     """
     Realiza web scraping de artículos relacionados con salud en periódicos españoles.
@@ -40,57 +40,63 @@ def scrape_health_articles(newspapers, health_keywords, max_age_days=30):
         r'/(\d{8})/'                    # formato /20240108/
     ]
     
-    for newspaper_name, base_url in newspapers.items():
-        try:
-            st.write(f"Analizando {newspaper_name}...")
-            
-            response = requests.get(base_url, headers=headers)
-            soup = BeautifulSoup(response.content, 'html.parser')
-            
-            for link in soup.find_all('a'):
-                url = link.get('href')
-                title = link.get_text().strip()
+    # Mostrar un mensaje general de "Analizando"
+    with st.status("Analizando periódicos...", expanded=True) as status:
+        for newspaper_name, base_url in newspapers.items():
+            try:
+                # Mostrar el periódico actual que se está analizando
+                st.write(f"Analizando: {newspaper_name}")
                 
-                if url and title and any(keyword in title.lower() for keyword in health_keywords):
-                    # Convertir URLs relativas a absolutas
-                    if not url.startswith(('http://', 'https://')):
-                        url = urljoin(base_url, url)
+                response = requests.get(base_url, headers=headers)
+                soup = BeautifulSoup(response.content, 'html.parser')
+                
+                for link in soup.find_all('a'):
+                    url = link.get('href')
+                    title = link.get_text().strip()
                     
-                    # Intentar extraer la fecha del artículo
-                    article_date = None
-                    
-                    # Buscar fecha en la URL
-                    for pattern in date_patterns:
-                        match = re.search(pattern, url)
-                        if match:
-                            try:
-                                # Asegurarnos de que estamos trabajando con cadenas
-                                date_str = str(match.group(1))  # Convertir el valor a cadena
-                                if len(date_str) == 8:  # Si encontramos fecha en formato /20240108/
-                                    article_date = datetime.strptime(date_str, '%Y%m%d')
-                                else:
-                                    # Reordenar los grupos según el patrón
-                                    date_parts = [int(g) for g in match.groups()]
-                                    if len(str(date_parts[0])) == 4:  # Comprobar si el primer número es el año
-                                        article_date = datetime(date_parts[0], date_parts[1], date_parts[2])
-                                    else:  # Si el último número es el año
-                                        article_date = datetime(date_parts[2], date_parts[1], date_parts[0])
-                            except ValueError:
-                                continue
-                    
-                    # Si no podemos determinar la fecha o el artículo es reciente, lo incluimos
-                    if article_date is None or article_date >= cutoff_date:
-                        health_articles.append({
-                            'newspaper': newspaper_name,
-                            'title': title,
-                            'url': url,
-                            'fecha': article_date
-                        })
-            
-            time.sleep(2)
-            
-        except Exception as e:
-            st.error(f"Error al analizar {newspaper_name}: {str(e)}")
+                    if url and title and any(keyword in title.lower() for keyword in health_keywords):
+                        # Convertir URLs relativas a absolutas
+                        if not url.startswith(('http://', 'https://')):
+                            url = urljoin(base_url, url)
+                        
+                        # Intentar extraer la fecha del artículo
+                        article_date = None
+                        
+                        # Buscar fecha en la URL
+                        for pattern in date_patterns:
+                            match = re.search(pattern, url)
+                            if match:
+                                try:
+                                    # Asegurarnos de que estamos trabajando con cadenas
+                                    date_str = str(match.group(1))  # Convertir el valor a cadena
+                                    if len(date_str) == 8:  # Si encontramos fecha en formato /20240108/
+                                        article_date = datetime.strptime(date_str, '%Y%m%d')
+                                    else:
+                                        # Reordenar los grupos según el patrón
+                                        date_parts = [int(g) for g in match.groups()]
+                                        if len(str(date_parts[0])) == 4:  # Comprobar si el primer número es el año
+                                            article_date = datetime(date_parts[0], date_parts[1], date_parts[2])
+                                        else:  # Si el último número es el año
+                                            article_date = datetime(date_parts[2], date_parts[1], date_parts[0])
+                                except ValueError:
+                                    continue
+                        
+                        # Si no podemos determinar la fecha o el artículo es reciente, lo incluimos
+                        if article_date is None or article_date >= cutoff_date:
+                            health_articles.append({
+                                'newspaper': newspaper_name,
+                                'title': title,
+                                'url': url,
+                                'fecha': article_date
+                            })
+                
+                time.sleep(2)  # Esperar 2 segundos entre cada periódico
+                
+            except Exception as e:
+                st.error(f"Error al analizar {newspaper_name}: {str(e)}")
+        
+        # Actualizar el estado cuando termine el proceso
+        status.update(label="Análisis completado", state="complete")
     
     # Crear DataFrame con los resultados
     df = pd.DataFrame(health_articles)
@@ -105,7 +111,7 @@ st.title("Scraping de Artículos sobre Inteligencia Artificial en Periódicos Es
 
 # Campo para introducir palabras clave
 user_keywords = st.text_input(
-    "Introduce palabras clave separadas por comas (por ejemplo: salud, medicina, clinica...):",
+    "Introduce palabras clave separadas por comas (por ejemplo: inteligencia artificial, machine learning, IA):",
     "inteligencia artificial, machine learning, IA, ChatGPT, OpenAI, Claude, aprendizaje automático, deep learning, redes neuronales, algoritmos, ciencia de datos, automatización, modelos generativos"
 )
 
