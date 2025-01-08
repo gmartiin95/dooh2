@@ -52,7 +52,8 @@ def scrape_health_articles(newspapers, health_keywords, max_age_days=30):
                 url = link.get('href')
                 title = link.get_text().strip()
                 
-                if url and title and any(keyword in title.lower() for keyword in health_keywords):
+                # Verificar si el título contiene TODAS las palabras clave
+                if url and title and all(keyword in title.lower() for keyword in health_keywords):
                     # Convertir URLs relativas a absolutas
                     if not url.startswith(('http://', 'https://')):
                         url = urljoin(base_url, url)
@@ -79,8 +80,8 @@ def scrape_health_articles(newspapers, health_keywords, max_age_days=30):
                             except ValueError:
                                 continue
                     
-                    # Si no podemos determinar la fecha o el artículo es reciente, lo incluimos
-                    if article_date is None or article_date >= cutoff_date:
+                    # Solo incluir el artículo si la fecha es válida y reciente
+                    if article_date and article_date >= cutoff_date:
                         health_articles.append({
                             'newspaper': newspaper_name,
                             'title': title,
