@@ -3,12 +3,6 @@ streamlit
 folium
 streamlit-folium
 requests
-bs4 
-BeautifulSoup
-urllib.parse  
-urljoin
-time
-datetime 
-datetime
-timedelta
-re
+beautifulsoup4
+
+
