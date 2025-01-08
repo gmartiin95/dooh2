@@ -175,11 +175,14 @@ spanish_newspapers = {
     'Telva': 'https://telva.com'
 }
 
+# Selección de periódicos por defecto (5 periódicos)
+default_newspapers = ['El País', 'El Mundo', 'El Confidencial', '20 Minutos', 'Público']
+
 # Cuadro de selección para elegir periódicos
 selected_newspapers = st.multiselect(
-    "Selecciona los periódicos que deseas analizar (por defecto se analizarán todos):",
+    "Selecciona los periódicos que deseas analizar (por defecto se analizarán 5):",
     options=list(spanish_newspapers.keys()),
-    default=list(spanish_newspapers.keys())  # Por defecto selecciona todos
+    default=default_newspapers  # Por defecto selecciona 5 periódicos
 )
 
 # Filtrar el diccionario de periódicos según la selección del usuario
