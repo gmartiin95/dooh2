@@ -107,7 +107,7 @@ st.title("Scraping de Artículos sobre Inteligencia Artificial en Periódicos Es
 # Campo para introducir palabras clave
 user_keywords = st.text_input(
     "Introduce palabras clave separadas por comas (por ejemplo: inteligencia artificial, machine learning, IA):",
-    "inteligencia artificial, machine learning, IA, ChatGPT, OpenAI, Claude, aprendizaje automático, deep learning, redes neuronales, algoritmos, ciencia de datos, automatización, modelos generativos"
+    "inteligencia artificial, machine learning, IA, ChatGPT, OpenAI, Claude, aprendizaje automático, deep learning"
 )
 
 # Convertir las palabras clave en una lista
