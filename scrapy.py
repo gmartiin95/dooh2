@@ -102,7 +102,7 @@ def scrape_health_articles(newspapers, health_keywords, max_age_days=30):
     return df
 
 # Configuración de la aplicación Streamlit
-st.title("Scraping de Artículos sobre Inteligencia Artificial en Periódicos Españoles")
+st.title("Scraping de Artículos en Periódicos Españoles")
 
 # Campo para introducir palabras clave
 user_keywords = st.text_input(
