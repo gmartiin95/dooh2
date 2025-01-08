@@ -155,10 +155,7 @@ spanish_newspapers = {
     'Economía Digital': 'https://economiadigital.es',
     'Bolsamanía': 'https://bolsamania.com',
     'Business Insider España': 'https://businessinsider.es',
-    'InfoBolsa': 'https://infobolsa.es',
     'PC Bolsa': 'https://pcbolsa.com',
-    'Intereconomía': 'https://intereconomia.com',
-    'El Referente': 'https://elreferente.es',
     'Negocios y Emprendimiento': 'https://negociosyemprendimiento.org',
     'Libertad Digital': 'https://libertaddigital.com',
     'Merca2': 'https://merca2.es',
@@ -175,11 +172,7 @@ spanish_newspapers = {
     'Mujer Hoy': 'https://mujerhoy.com',
     'Nueva Mujer': 'https://nuevamujer.com',
     'Clara': 'https://clara.es',
-    'Telva': 'https://telva.com',
-    'Style Lovely': 'https://stylelovely.com',
-    'Fashion United': 'https://fashionunited.es',
-    'Vanitatis (El Confidencial)': 'https://vanitatis.elconfidencial.com',
-    'Modaes': 'https://modaes.com'
+    'Telva': 'https://telva.com'
 }
 
 # Cuadro de selección para elegir periódicos
