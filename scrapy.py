@@ -112,7 +112,7 @@ user_keywords = st.text_input(
 )
 
 # Convertir las palabras clave en una lista
-health_keywords = [keyword.strip().lower() for keyword in user_keywords.split(",")]
+health_keywords = [keyword.strip().lower() for keyword in user_keywords.split(",") if keyword.strip()]
 
 # Diccionario de periódicos
 spanish_newspapers = {
