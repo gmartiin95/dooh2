@@ -60,46 +60,6 @@ if not df_resultado.empty:
     st.write("Resultados encontrados con los filtros aplicados:")
     st.dataframe(df_resultado)
 
-    # Crear un mapa interactivo con Folium
-    st.header("Mapa de Ubicaciones")
-    centro_mapa = [df_resultado['Latitude'].mean(), df_resultado['Longitude'].mean()]
-    mapa = folium.Map(location=centro_mapa, zoom_start=16)
-  # Crear un grupo de marcadores para el buscador
-    marker_group = folium.FeatureGroup(name="Marcadores")
-    mapa.add_child(marker_group)
-
-    # Agregar marcadores al mapa como puntos individuales
-    for _, row in df_resultado.iterrows():
-        folium.Marker(
-            location=[row['Latitude'], row['Longitude']],
-            popup=f"{row['Full address']} - {row['Venue types']}",
-            tooltip=row['City']
-        ).add_to(marker_group)
-
-    # Agregar un buscador de ubicaciones
-    search = Search(
-        layer=marker_group,  # Buscar en los marcadores individuales
-        search_label='City',   # Buscar por la columna 'City'
-        placeholder='Buscar ciudad...',
-        collapsed=True
-    ).add_to(mapa)
-
-    # Mostrar el mapa en Streamlit
-    st_folium(mapa, width=700, height=500)
-     # Guardar el mapa en un archivo HTML
-    mapa.save("mapa_interactivo.html")
-
-    # Botón para descargar el mapa como HTML
-    with open("mapa_interactivo.html", "rb") as file:
-        btn = st.download_button(
-            label="Descargar Mapa (HTML)",
-            data=file,
-            file_name="mapa_interactivo.html",
-            mime="text/html"
-        )
-else:
-    st.write("No se encontraron resultados para los filtros seleccionados.")
-
 # Bloque 3: Búsqueda por Códigos Postales
 st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue)")
 st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
