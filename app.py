@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 from folium.plugins import Search
 
 # Paso 1: Cargar el CSV en un DataFrame de pandas
-ruta_csv = 'DOOH  15 - Sheet1.csv'  # Cambia esta ruta al archivo CSV que tienes
+ruta_csv = 'DOOH UPDATE - Hoja 1.csv'  # Cambia esta ruta al archivo CSV que tienes
 df = pd.read_csv(ruta_csv)
 
 # Convertir Latitude y Longitude a números, ignorando valores no válidos
