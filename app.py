@@ -69,4 +69,24 @@ if not df_resultado.empty:
         folium.Marker(
             location=[row['Latitude'], row['Longitude']],
             popup=row['Full address']
-        ).
+        ).add_to(m)
+    st_folium(m, width=700, height=500)
+
+# ---------------- Búsqueda por Códigos Postales ----------------
+st.header("Búsqueda por Códigos Postales (No aplicable filtros de Ciudad y Venue)")
+st.write("Ingresa los códigos postales separados por comas (Ejemplo: 4006, 4004, 37004)")
+
+input_zipcodes = st.text_input('Códigos postales', '4006, 4004, 37004')
+
+try:
+    zipcodes_a_buscar = [int(zipcode.strip()) for zipcode in input_zipcodes.split(',') if zipcode.strip().isdigit()]
+    df_filtrado_zip = df[df['Zipcode'].isin(zipcodes_a_buscar)]
+    df_resultado_zip = df_filtrado_zip[['Zipcode', 'Frame id', 'Full address', 'Publisher', 'City', 'VenueTypes']]
+
+    if not df_resultado_zip.empty:
+        st.write("Resultados encontrados por códigos postales:")
+        st.dataframe(df_resultado_zip)
+    else:
+        st.write("No se encontraron resultados para los códigos postales ingresados.")
+except ValueError:
+    st.error("Por favor, ingresa solo números separados por comas como códigos postales.")
